@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Python-cod</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <ul class="nav nav-tabs bg-success shadow rounded sticky-sm-top ">
+    <li class="nav-item">
+      <a class="nav-link text-white" aria-current="page" href="../python/index.html">Главная</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../data/index.html">Подключение и обработка</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active link-dark fw-bolder" href="../text/index.html">Работа с данными</a>
+      </li> 
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../table/index.html">Визуализация</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../photo/index.html">Модель</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../test/index.html">Колаб test</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../housing/index.html">Колаб housing</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../regression/index.html">Колаб регрессия</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" href="../visual/index.html">Колаб визуализация</a>
+    </li>
+    <button type="button" class="btn btn-succes text-white px-3" type="submit" onClick="location.href='https://www.youtube.com/watch?v=kb8mcYwbFj8&ab_channel=GloAcademy'">YouTube</button> 
+  </ul>
+  
+<div class="container">
+  <pre>
+    <code>
+        Глава 3.
+        Упорядочение данных
+        3.0 Введение
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv' # локально 'titanic.csv'
+        
+        # Загрузить данные как фрейм данных
+        dataframe = pd.read_csv(url)
+        
+        # Показать первые 5 строк
+        dataframe.head(5)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.00	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.00	female	0	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.00	male	0	0
+        3	Allison, Mrs Hudson JC (Bessie Waldo Daniels)	1st	25.00	female	0	1
+        4	Allison, Master Hudson Trevor	1st	0.92	male	1	0
+
+        3.1 Создание фрейма данных
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать фрейм данных DataFrame
+        dataframe = pd.DataFrame()
+        
+        # Добавть столбцы
+        dataframe['Имя'] = ['Джеки Джексон', 'Стивен Стивенсон']
+        dataframe['Возраст'] = [38, 25]
+        dataframe['Водитель'] = [True, False]
+        
+        # Показать DataFrame
+        dataframe
+
+        Имя	Возраст	Водитель
+        0	Джеки Джексон	38	True
+        1	Стивен Стивенсон	25	False
+
+        # Создать строку
+        new_person = pd.Series(['Молли Муни', 40, True], 
+                               index=['Имя','Возраст','Водитель'])
+        
+        # Добавить строку в конец фрейма данных
+        dataframe.append(new_person, ignore_index=True)
+
+        Имя	Возраст	Водитель
+        0	Джеки Джексон	38	True
+        1	Стивен Стивенсон	25	False
+        2	Молли Муни	40	True
+
+        3.2 Описание данных
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Показать две строки
+        dataframe.head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Показать размерности
+        dataframe.shape
+        (1313, 6)
+        # Показать статистику
+        dataframe.describe()
+
+        Age	Survived	SexCode
+        count	756.000000	1313.000000	1313.000000
+        mean	30.397989	0.342727	0.351866
+        std	14.259049	0.474802	0.477734
+        min	0.170000	0.000000	0.000000
+        25%	21.000000	0.000000	0.000000
+        50%	28.000000	0.000000	0.000000
+        75%	39.000000	1.000000	1.000000
+        max	71.000000	1.000000	1.000000
+        
+        3.3 Навигация по фреймам данных
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Выбрать первую строку
+        dataframe.iloc[0]
+
+        Name        Allen, Miss Elisabeth Walton
+        PClass                               1st
+        Age                                   29
+        Sex                               female
+        Survived                               1
+        SexCode                                1
+        Name: 0, dtype: object
+
+        # Выбрать три строки
+        dataframe.iloc[1:4]
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.0	male	0	0
+        3	Allison, Mrs Hudson JC (Bessie Waldo Daniels)	1st	25.0	female	0	1
+
+        # Выбрать три строки
+
+        dataframe.iloc[:4]
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.0	male	0	0
+        3	Allison, Mrs Hudson JC (Bessie Waldo Daniels)	1st	25.0	female	0	1
+
+        # Задать индекс
+        dataframe = dataframe.set_index(dataframe['Name'])
+        
+        # Показать строку
+
+        dataframe.loc['Allen, Miss Elisabeth Walton']
+        Name        Allen, Miss Elisabeth Walton
+        PClass                               1st
+        Age                                   29
+        Sex                               female
+        Survived                               1
+        SexCode                                1
+        Name: Allen, Miss Elisabeth Walton, dtype: object
+
+        3.4 Выбор строк на основе условных конструкций
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Показать верхние две строки, где столбец 'sex' равняется 'female'
+        dataframe[dataframe['Sex'] == 'female'].head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Отфильтровать строки
+        dataframe[(dataframe['Sex'] == 'female') & (dataframe['Age'] >= 65)]
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        73	Crosby, Mrs Edward Gifford (Catherine Elizabet...	1st	69.0	female	1	1
+
+        3.5 Замена значений
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Заменить значения, показать две строки
+        dataframe['Sex'].replace("female", "Woman").head(2)
+
+        0    Woman
+        1    Woman
+        Name: Sex, dtype: object
+
+        # Заменить значения, показать две строки
+        dataframe.replace(1, "One").head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29	female	One	One
+        1	Allison, Miss Helen Loraine	1st	2	female	0	One
+
+        # Заменить значения, показать две строки
+
+        dataframe.replace(r"1st", "First", regex=True).head(2)
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	First	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	First	2.0	female	0	1
+
+        3.6 Переименование столбцов
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Переименовать столбец, показать две строки
+        dataframe.rename(columns={'PClass': 'Passenger Class'}).head(2)
+
+        Name	Passenger Class	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Переименовать столбцы, показать две строки
+        dataframe.rename(columns={'PClass': 'Passenger Class', 'Sex': 'Gender'}).head(2)
+
+        Name	Passenger Class	Age	Gender	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Загрузить библиотеку
+        import collections
+        
+        # Создать словарь
+        column_names = collections.defaultdict(str)
+        
+        # Создать ключи
+        for name in dataframe.columns:
+            column_names[name]
+        
+        # Показать словарь
+        column_names
+        defaultdict(str,
+                    {'Age': '',
+                     'Name': '',
+                     'PClass': '',
+                     'Sex': '',
+                     'SexCode': '',
+                     'Survived': ''})
+        3.7 Нахождение минимума, максимума, суммы, среднего арифметического и количества
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Вычислить статистические показатели
+        print('Максимум:', dataframe['Age'].max())
+        print('Минимум:', dataframe['Age'].min())
+        print('Среднее:', dataframe['Age'].mean())
+        print('Сумма:', dataframe['Age'].sum())
+        print('Количество:', dataframe['Age'].count())
+
+        Максимум: 71.0
+        Минимум: 0.17
+        Среднее: 30.397989417989418
+        Сумма: 22980.88
+        Количество: 756
+
+        # Показать количества значений
+
+        dataframe.count()
+        Name        1313
+        PClass      1313
+        Age          756
+        Sex         1313
+        Survived    1313
+        SexCode     1313
+        dtype: int64
+
+        3.8 Нахождение уникальных значений
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Выбрать уникальные значения
+        dataframe['Sex'].unique()
+        array(['female', 'male'], dtype=object)
+        # Показать количества появлений
+        dataframe['Sex'].value_counts()
+
+        male      851
+        female    462
+        Name: Sex, dtype: int64
+
+        # Показать количества появлений
+        dataframe['PClass'].value_counts()
+
+        3rd    711
+        1st    322
+        2nd    279
+        *        1
+        Name: PClass, dtype: int64
+
+        # Показать количество уникальных значений
+        dataframe['PClass'].nunique()
+        4
+        3.9 Отбор пропущенных значений
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv' 
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Выбрать пропущенные значения, показать две строки
+        dataframe[dataframe['Age'].isnull()].head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        12	Aubert, Mrs Leontine Pauline	1st	NaN	female	1	1
+        13	Barkworth, Mr Algernon H	1st	NaN	male	1	0
+        
+        # Заменить значения с NaN
+        dataframe['Sex'] = dataframe['Sex'].replace('male', np.nan)
+        # Загрузить данные, задать пропущенные значения
+        dataframe = pd.read_csv(url, na_values=[np.nan, 'NONE', -999])
+        3.10 Удаление столбца
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Удалить столбец
+        dataframe.drop('Age', axis=1).head(2)
+
+        Name	PClass	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	female	1	1
+        1	Allison, Miss Helen Loraine	1st	female	0	1
+
+        # Исключить столбцы
+        dataframe.drop(['Age', 'Sex'], axis=1).head(2)
+
+        Name	PClass	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	1	1
+        1	Allison, Miss Helen Loraine	1st	0	1
+
+        # Исключить столбец
+        dataframe.drop(dataframe.columns[1], axis=1).head(2)
+
+        Name	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	2.0	female	0	1
+
+        # Создать новый фрейм данных
+        dataframe_name_dropped = dataframe.drop(dataframe.columns[0], axis=1)
+        
+        dataframe_name_dropped.head()
+
+        PClass	Age	Sex	Survived	SexCode
+        0	1st	29.00	female	1	1
+        1	1st	2.00	female	0	1
+        2	1st	30.00	male	0	0
+        3	1st	25.00	female	0	1
+        4	1st	0.92	male	1	0
+
+        3.11 Удаление строки
+        
+        # Загрузить библиотеку 
+        import pandas as pd
+        
+        # Создать URL-адрес 
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные 
+        dataframe = pd.read_csv(url)
+        
+        # Удалить строки, показать первые две строки вывода
+        dataframe[dataframe['Sex'] != 'male'].head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Удалить строку, показать первые две строки вывода
+        dataframe[dataframe['Name'] != 'Allison, Miss Helen Loraine'].head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.0	male	0	0
+
+        # Удалить строку, показать первые две строки вывода
+        dataframe[dataframe.index != 0].head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.0	male	0	0
+
+        3.12 Удаление повторяющихся строк
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Удалить дубликаты, показать первые две строки вывода
+        dataframe.drop_duplicates().head(2)
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        1	Allison, Miss Helen Loraine	1st	2.0	female	0	1
+
+        # Показать количество строк
+        print("Количество строк в исходном фрейме данных:", len(dataframe))
+        print("Количество строк после дедубликации:", len(dataframe.drop_duplicates()))
+        Количество строк в исходном фрейме данных: 1313
+        Количество строк после дедубликации: 1313
+        # Удалить дубликаты
+        dataframe.drop_duplicates(subset=['Sex'])
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        0	Allen, Miss Elisabeth Walton	1st	29.0	female	1	1
+        2	Allison, Mr Hudson Joshua Creighton	1st	30.0	male	0	0
+
+        # Удалить дубликаты
+        dataframe.drop_duplicates(subset=['Sex'], keep='last')
+
+        Name	PClass	Age	Sex	Survived	SexCode
+        1307	Zabour, Miss Tamini	3rd	NaN	female	0	1
+        1312	Zimmerman, Leo	3rd	29.0	male	0	0
+
+        3.13 Группирование строк по значениям
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Сгруппировать строки по значениям столбца 'Sex', вычислить среднее
+        # каждой группы
+        dataframe.groupby('Sex').mean()
+
+        Age	Survived	SexCode
+        Sex			
+        female	29.396424	0.666667	1.0
+        male	31.014338	0.166863	0.0
+
+        # Сгруппировать строки
+        dataframe.groupby('Sex')
+        <pandas.core.groupby.DataFrameGroupBy object at 0x000002443C746710>
+        # Сгруппировать строки, подсчитать строки
+        dataframe.groupby('Survived')['Name'].count()
+
+        Survived
+        0    863
+        1    450
+        Name: Name, dtype: int64
+
+        # Сгруппировать строки, вычислить среднее
+        dataframe.groupby(['Sex','Survived'])['Age'].mean()
+
+        Sex     Survived
+        female  0           24.901408
+                1           30.867143
+        male    0           32.320780
+                1           25.951875
+        Name: Age, dtype: float64
+
+        3.14 Группирование строк по времени
+        
+        # Загрузить библиотеки 
+        import pandas as pd
+        import numpy as np
+        
+        # Создать диапазон дат
+        time_index = pd.date_range('06/06/2017', periods=100000, freq='30S')
+        
+        # Создать фрейм данных
+        dataframe = pd.DataFrame(index=time_index)
+        
+        # Создать столбец случайных значений
+        dataframe['Sale_Amount'] = np.random.randint(1, 10, 100000)
+        
+        # Сгруппировать строки по неделе, вычислить сумму за неделю
+        dataframe.resample('W').sum()
+
+        Sale_Amount
+        2017-06-11	86505
+        2017-06-18	100489
+        2017-06-25	101015
+        2017-07-02	100490
+        2017-07-09	100288
+        2017-07-16	10785
+
+        # Показать три строки
+
+        dataframe.head(3)
+        Sale_Amount
+        2017-06-06 00:00:00	3
+        2017-06-06 00:00:30	1
+        2017-06-06 00:01:00	8
+
+        # Сгруппировать по двум неделям, вычислить среднее
+        dataframe.resample('2W').mean()
+
+        Sale_Amount
+        2017-06-11	5.006076
+        2017-06-25	4.997619
+        2017-07-09	4.979613
+        2017-07-23	5.185096
+
+        # Сгруппировать по месяцу, побсчитать строки
+        dataframe.resample('M').count()
+
+        Sale_Amount
+        2017-06-30	72000
+        2017-07-31	28000
+
+        # Сгруппировать по месяцу, побсчитать строки
+        dataframe.resample('M', label='left').count()
+
+        Sale_Amount
+        2017-05-31	72000
+        2017-06-30	28000
+
+        3.15 Обход столбца в цикле
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Напечатать первые два имени в верхнем регистре
+        for name in dataframe['Name'][0:2]:
+            print(name.upper())
+
+        ALLEN, MISS ELISABETH WALTON
+        ALLISON, MISS HELEN LORAINE
+
+        # Напечатать первые два имени в верхнем регистре
+
+        [name.upper() for name in dataframe['Name'][0:2]]
+        ['ALLEN, MISS ELISABETH WALTON', 'ALLISON, MISS HELEN LORAINE']
+
+        3.16 Применение функции ко всем элементам в столбце
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # оздать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Создать функцию
+        def uppercase(x):
+            return x.upper()
+        
+        # Применить функцию, показать две строки
+        dataframe['Name'].apply(uppercase)[0:2]
+
+        0    ALLEN, MISS ELISABETH WALTON
+        1     ALLISON, MISS HELEN LORAINE
+        Name: Name, dtype: object
+
+        3.17 Применение функции к группам
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать URL-адрес
+        url = 'https://tinyurl.com/titanic-csv'
+        
+        # Загрузить данные
+        dataframe = pd.read_csv(url)
+        
+        # Сгруппировать строки, применить функцию к группам
+        dataframe.groupby('Sex').apply(lambda x: x.count())
+        Name	PClass	Age	Sex	Survived	SexCode
+        Sex						
+        female	462	462	288	462	462	462
+        male	851	851	468	851	851	851
+        3.18 Конкатенация фреймов данных
+        
+        # Load library
+        import pandas as pd
+        
+        # Создать фрейм данных
+        data_a = {'id': ['1', '2', '3'],
+                  'first': ['Alex', 'Amy', 'Allen'],
+                  'last': ['Anderson', 'Ackerman', 'Ali']}
+        dataframe_a = pd.DataFrame(data_a, columns = ['id', 'first', 'last'])
+        
+        # Создать фрейм данных
+        data_b = {'id': ['4', '5', '6'],
+                  'first': ['Billy', 'Brian', 'Bran'],
+                  'last': ['Bonder', 'Black', 'Balwner']}
+        dataframe_b = pd.DataFrame(data_b, columns = ['id', 'first', 'last'])
+        
+        # Конкатенировать фреймы данных построчно
+        pd.concat([dataframe_a, dataframe_b], axis=0)
+
+        id	first	last
+        0	1	Alex	Anderson
+        1	2	Amy	Ackerman
+        2	3	Allen	Ali
+        0	4	Billy	Bonder
+        1	5	Brian	Black
+        2	6	Bran	Balwner
+
+        # Конкатенировать фреймы данных по столбцам
+        pd.concat([dataframe_a, dataframe_b], axis=1)
+
+        id	first	last	id	first	last
+        0	1	Alex	Anderson	4	Billy	Bonder
+        1	2	Amy	Ackerman	5	Brian	Black
+        2	3	Allen	Ali	6	Bran	Balwner
+
+        # Создать строку
+        row = pd.Series([10, 'Chris', 'Chillon'], index=['id', 'first', 'last'])
+        
+        # Добавить строку в конец
+        dataframe_a.append(row, ignore_index=True)
+
+        id	first	last
+        0	1	Alex	Anderson
+        1	2	Amy	Ackerman
+        2	3	Allen	Ali
+        3	10	Chris	Chillon
+
+        3.19 Слияние фреймов данных
+        
+        # Загрузить библиотеку
+        import pandas as pd
+        
+        # Создать фрейм данных
+        employee_data = {'employee_id': ['1', '2', '3', '4'],
+                         'name': ['Amy Jones', 'Allen Keys', 'Alice Bees',
+                                  'Tim Horton']}
+        dataframe_employees = pd.DataFrame(employee_data, columns = ['employee_id',
+                                                                     'name'])
+        
+        # Создать фрейм данных
+        sales_data = {'employee_id': ['3', '4', '5', '6'],
+                      'total_sales': [23456, 2512, 2345, 1455]}
+        dataframe_sales = pd.DataFrame(sales_data, columns = ['employee_id',
+                                                              'total_sales'])
+        
+        # Выполнить слияние фреймов данных
+        pd.merge(dataframe_employees, dataframe_sales, on='employee_id')
+
+        employee_id	name	total_sales
+        0	3	Alice Bees	23456
+        1	4	Tim Horton	2512
+
+        # Выполнить слияние фреймов данных
+        pd.merge(dataframe_employees, dataframe_sales, on='employee_id', how='outer')
+
+        employee_id	name	total_sales
+        0	1	Amy Jones	NaN
+        1	2	Allen Keys	NaN
+        2	3	Alice Bees	23456.0
+        3	4	Tim Horton	2512.0
+        4	5	NaN	2345.0
+        5	6	NaN	1455.0
+
+        # Выполнить слияние фреймов данных
+        pd.merge(dataframe_employees, dataframe_sales, on='employee_id', how='left')
+
+        employee_id	name	total_sales
+        0	1	Amy Jones	NaN
+        1	2	Allen Keys	NaN
+        2	3	Alice Bees	23456.0
+        3	4	Tim Horton	2512.0
+
+        # Выполнить слияние фреймов данных
+        pd.merge(dataframe_employees,
+                 dataframe_sales,
+                 left_on='employee_id',
+                 right_on='employee_id')
+
+        employee_id	name	total_sales
+        0	3	Alice Bees	23456
+        1	4	Tim Horton	2512
+    </code>
+  </pre>
+  </div>
+</body>
+</html>
